@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+       // dd(session()->getId());
+       View::composer('*',function($view){
+        $view->with('cart', \App\Models\Cart::where('session_id',session()->getId())->first());
+
+
+       });
     }
 }
